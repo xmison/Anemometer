@@ -104,6 +104,7 @@ class QueryExplain {
         }
         $create_tables = array();
         foreach ($tables as $table) {
+	    $tmp_tj = $this->mysqli->query("set names utf8");
             $result = $this->mysqli->query("SHOW CREATE TABLE {$table}");
             if (is_object($result) && $row = $result->fetch_array()) {
                 $create_tables[] = $row[1];
@@ -127,6 +128,8 @@ class QueryExplain {
         $tables = $this->get_tables_from_query(new QueryTableParser());
         $table_status = array();
         foreach ($tables as $table) {
+            $tmp_sql = "set names utf8";
+            $tmp_r2 = $this->mysqli->query($tmp_sql);
             $sql = "SHOW TABLE STATUS LIKE '{$table}'";
             $result = $this->mysqli->query($sql);
             if (is_object($result) and $row = $result->fetch_assoc()) {
